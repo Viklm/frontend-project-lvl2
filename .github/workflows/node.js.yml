@@ -30,10 +30,12 @@ jobs:
     - run: npm run build --if-present
     - name: Run linter
       run: make lint
-    - name: Test & Code coverage
+    - name: Code Climate Coverage Action
+    # Publish code coverage on Code Climate
+    # https://github.com/paambaati/codeclimate-action
       uses: paambaati/codeclimate-action@v2.7.5
       env:
-        CC_TEST_REPORTER_ID: ${{ TEST_REPORTER_ID_SECRET }}
+        CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID_SECRET }}
       with:
         coverageCommand: make test-coverage
         debug: true
