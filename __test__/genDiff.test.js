@@ -14,5 +14,5 @@ test('gendiff for json file', () => {
 });
 
 test('gendiff for yaml file', () => {
-  expect(genDiff(getFixturePath('file1.yaml'), getFixturePath('file2.yaml'))).toBe(readFile('expect'));
+  expect(genDiff(getFixturePath('file1.yml'), getFixturePath('file2.yml'))).toBe(readFile('expect'));
 });
