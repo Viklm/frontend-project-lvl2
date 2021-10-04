@@ -14,7 +14,7 @@ const stringify = (value, depth) => {
   if (!_.isObject(value)) return value;
   const line = Object.entries(value);
   const lines = line.map(([key, val]) => `${setIndent(depth)}  ${key}: ${stringify(val, depth + 1)}`);
-  return ['{', ...lines, `${setIndent(depth, spacesCount)}}`].join('\n');
+  return ['{', ...lines, `${setIndent(depth, space)}}`].join('\n');
 };
 
 const makeStylish = (diff) => {
@@ -37,7 +37,7 @@ const makeStylish = (diff) => {
     };
 
     const result = currentValue.map((item) => makeString(item));
-    return ['{', ...result, `${setIndent(depth, spacesCount)}}`].join('\n');
+    return ['{', ...result, `${setIndent(depth, space)}}`].join('\n');
   };
   return iter(diff, 1);
 };
