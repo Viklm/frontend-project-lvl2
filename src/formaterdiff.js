@@ -11,7 +11,7 @@ const formDiff = (data1, data2) => {
     };
   };
 
-  const keys = _.union(Object.keys(data1), Object.keys(data2));
+  const keys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
   return keys.map((key) => calculateDiff(data1, data2, key));
 };
 
