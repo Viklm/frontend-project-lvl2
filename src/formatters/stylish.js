@@ -1,14 +1,13 @@
 import _ from 'lodash';
 
-const space = 4;
 const symbols = {
   unchanged: ' ',
   added: '+',
   deleted: '-',
   nested: ' ',
 };
-
-const setIndent = (depth, spaces = 2) => ' '.repeat(depth * space - spaces);
+const indent = 4;
+const setIndent = (depth, spaces = 2) => ' '.repeat(depth * indent - spaces);
 
 const stringify = (value, depth) => {
   if (!_.isObject(value)) return value;
@@ -16,28 +15,22 @@ const stringify = (value, depth) => {
     depth + 1)}`).join('\n')}\n${setIndent(depth - 1)}  }`;
 };
 
-const makeStylish = (diff) => {
-  const iter = (currentValue, depth) => {
-    const makeString = (object) => {
-      if (object.status === 'added') {
+const makeStylish = (difference) => {
+  const make = (object, depth) => {
+    switch (object.status) {
+      case 'added':
+      case 'deleted':
+      case 'unchanged':
         return `${setIndent(depth)}${symbols[object.status]} ${object.key}: ${stringify(object.value, depth + 1)}`;
-      }
-      if (object.status === 'deleted') {
-        return `${setIndent(depth)}${symbols.deleted} ${object.key}: ${stringify(object.value, depth + 1)}`;
-      }
-      if (object.status === 'unchanged') {
-        return `${setIndent(depth)}${symbols.unchanged} ${object.key}: ${stringify(object.value, depth + 1)}`;
-      }
-      if (object.status === 'nested') {
-        return `${setIndent(depth)}${symbols.nested} ${object.key}: ${iter(object.descendants, depth + 1)}`;
-      }
-      return `${setIndent(depth)}${symbols.deleted} ${object.key}: ${stringify(object.value1, depth + 1)}\n${setIndent(depth)}${symbols.added} ${object.key}: ${stringify(object.value2, depth + 1)}`;
-    };
-
-    const result = currentValue.map((item) => makeString(item));
-    return ['{', ...result, `${setIndent(depth, space)}}`].join('\n');
+      case 'changed':
+        return `${setIndent(depth)}${symbols.deleted} ${object.key}: ${stringify(object.value1,
+          depth + 1)}\n${setIndent(depth)}${symbols.added} ${object.key}: ${stringify(object.value2, depth + 1)}`;
+      case 'nested':
+        return `${setIndent(depth)}${symbols.nested} ${object.key}: {\n${object.descendants
+          .map((element) => make(element, depth + 1)).join('\n')}\n  ${setIndent(depth)}}`;
+    }
   };
-  return iter(diff, 1);
+  return `{\n${difference.map((object) => make(object, 1)).join('\n')}\n}`;
 };
 
 export default makeStylish;
