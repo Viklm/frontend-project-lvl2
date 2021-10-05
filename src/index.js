@@ -13,14 +13,10 @@ const dataOfFile = (filepath) => {
   return letParse(data, fileFormat);
 };
 
-const getDifferenceOfFile = (filepath1, filepath2) => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const file1 = dataOfFile(filepath1);
   const file2 = dataOfFile(filepath2);
-  return formDiff(file1, file2);
-};
-
-const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-  const diff = getDifferenceOfFile(filepath1, filepath2);
+  const diff = formDiff(file1, file2);
   return formatDiff(diff, formatName);
 };
 
