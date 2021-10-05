@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import letParse from './parsers.js';
 import formDiff from './formaterdiff.js';
-import makeStylish from './stylish.js';
+import formatDiff from './formatters/index.js';
 
 const getFileFormat = (filepath) => path.extname(filepath);
 
@@ -19,10 +19,9 @@ const getDifferenceOfFile = (filepath1, filepath2) => {
   return formDiff(file1, file2);
 };
 
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const diff = getDifferenceOfFile(filepath1, filepath2);
-  if (format === 'stylish') return makeStylish(diff);
-  return 2;
+  return formatDiff(diff, formatName);
 };
 
 export default genDiff;
