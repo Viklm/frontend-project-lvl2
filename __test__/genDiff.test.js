@@ -9,10 +9,18 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
-test('gendiff for json file', () => {
-  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'))).toBe(readFile('expect-stylish'));
-});
+const fileFormats = ['json', 'yml'];
+const formatters = ['stylish', 'plain'];
 
-test('gendiff for yaml file', () => {
-  expect(genDiff('__fixtures__/file1.yml', '__fixtures__/file2.yml')).toEqual(readFile('expect-stylish'));
+const stylish = readFile('expect-stylish');
+const plain = readFile('expect-plain');
+const output = { stylish, plain };
+const argumentsOfTest = formatters.flatMap((format) => (
+  fileFormats.map((fileFormat) => [fileFormat, format])
+));
+
+test.each(argumentsOfTest)('%s format files difference with %s output format', (fileFormat, format) => {
+  const file1 = getFixturePath(`file1.${fileFormat}`);
+  const file2 = getFixturePath(`file2.${fileFormat}`);
+  expect(genDiff(file1, file2, format)).toBe(output[format]);
 });
