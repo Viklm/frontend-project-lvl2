@@ -10,11 +10,12 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
 const fileFormats = ['json', 'yml'];
-const formatters = ['stylish', 'plain'];
+const formatters = ['stylish', 'plain', 'json'];
 
 const stylish = readFile('expect-stylish');
 const plain = readFile('expect-plain');
-const output = { stylish, plain };
+const json = readFile('expect-json');
+const output = { stylish, plain, json };
 const argumentsOfTest = formatters.flatMap((format) => (
   fileFormats.map((fileFormat) => [fileFormat, format])
 ));
