@@ -28,6 +28,8 @@ const makeStylish = (difference) => {
       case 'nested':
         return `${setIndent(depth)}${symbols.nested} ${object.key}: {\n${object.descendants
           .map((element) => make(element, depth + 1)).join('\n')}\n  ${setIndent(depth)}}`;
+      default:
+        throw new Error('Unknown status.');
     }
   };
   return `{\n${difference.map((object) => make(object, 1)).join('\n')}\n}`;

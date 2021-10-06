@@ -19,6 +19,8 @@ const makePlain = (difference) => {
         return `Property '${parent}${object.key}' was ${object.status} with value: ${getValue(object.value)}`;
       case 'unchanged':
         return null;
+      default:
+        throw new Error('Unknown status.');
     }
   };
   return `${difference.map((object) => make(object)).join('\n')}`;
