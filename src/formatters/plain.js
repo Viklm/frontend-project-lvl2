@@ -14,7 +14,7 @@ const makePlain = (difference) => {
       case 'updated':
         return `Property '${parent}${object.key}' was ${object.status}. From ${getValue(object.value1)} to ${getValue(object.value2)}`;
       case 'removed':
-        return `Property '${parent}${object.key}' was ${object.status}.`;
+        return `Property '${parent}${object.key}' was ${object.status}`;
       case 'added':
         return `Property '${parent}${object.key}' was ${object.status} with value: ${getValue(object.value)}`;
       case 'unchanged':
