@@ -3,7 +3,7 @@ import _ from 'lodash';
 const symbols = {
   unchanged: ' ',
   added: '+',
-  deleted: '-',
+  removed: '-',
   nested: ' ',
 };
 const indent = 4;
@@ -19,11 +19,11 @@ const makeStylish = (difference) => {
   const make = (object, depth) => {
     switch (object.status) {
       case 'added':
-      case 'deleted':
+      case 'removed':
       case 'unchanged':
         return `${setIndent(depth)}${symbols[object.status]} ${object.key}: ${stringify(object.value, depth + 1)}`;
-      case 'changed':
-        return `${setIndent(depth)}${symbols.deleted} ${object.key}: ${stringify(object.value1,
+      case 'updated':
+        return `${setIndent(depth)}${symbols.removed} ${object.key}: ${stringify(object.value1,
           depth + 1)}\n${setIndent(depth)}${symbols.added} ${object.key}: ${stringify(object.value2, depth + 1)}`;
       case 'nested':
         return `${setIndent(depth)}${symbols.nested} ${object.key}: {\n${object.descendants
