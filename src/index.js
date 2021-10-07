@@ -4,7 +4,7 @@ import letParse from './parsers.js';
 import formDiff from './formaterdiff.js';
 import formatDiff from './formatters/index.js';
 
-const getFileFormat = (filepath) => path.extname(filepath);
+const getFileFormat = (filepath) => path.extname(filepath).slice(1);
 
 const dataOfFile = (filepath) => {
   const pathToFile = path.resolve(process.cwd(), filepath);

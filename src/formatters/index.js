@@ -3,9 +3,16 @@ import makePlain from './plain.js';
 import makeJson from './json.js';
 
 const formatDiff = (diff, formatName) => {
-  if (formatName === 'plain') return makePlain(diff);
-  if (formatName === 'json') return makeJson(diff);
-  return makeStylish(diff);
+  switch (formatName) {
+    case 'plain':
+      return makePlain(diff);
+    case 'json':
+      return makeJson(diff);
+    case 'stylish':
+      return makeStylish(diff);
+    default:
+      throw new Error('Unknown format.');
+  }
 };
 
 export default formatDiff;

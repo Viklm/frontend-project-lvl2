@@ -11,6 +11,7 @@ This utility will allow you to compare two files with the extension json or yaml
 $ git clone https://github.com/Viklm/frontend-project-lvl2.git
 $ cd frontend-project-lvl2
 $ make install
+$ npm link
 $ gendiff
 ```
 ### Comparison of json and yaml files.
